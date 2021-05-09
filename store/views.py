@@ -46,10 +46,21 @@ def add_cart(request):
         item_id = request.POST["product_id"]
         cart_ids.append(item_id)
 
+    counter = 0
     for i in cart_ids:
         product = Product.objects.get(id=int(i))
-        if product not in products_in_cart:
-            products_in_cart.append(product)
+        # products_in_cart.append(product)
+
+        if i == item_id:
+            counter += 1
+
+        product_in_cart = {
+            "product": product,
+            "counter": counter
+        }
+
+        products_in_cart.append(product_in_cart)
+        print(products_in_cart)
 
     request.session["cart_items"] = cart_ids
 

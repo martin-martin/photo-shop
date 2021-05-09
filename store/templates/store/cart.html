@@ -7,8 +7,11 @@
 {% block content %}
 <h1 class="heading">Categories</h1>
 {% for i in products_in_cart %}
-<p>{{i.product_name}}</p>
-<p>{{i.price_with_vat}}</p>
+{% for v in i.values %}
+{{v}}
+
+{%endfor%}
+
 {% endfor %}
 
     
