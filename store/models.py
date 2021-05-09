@@ -19,3 +19,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+
+    def price_with_vat(self):
+        price_with_vat = self.product_price * 1.25
+        return price_with_vat
