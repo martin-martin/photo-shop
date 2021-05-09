@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'store/store.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1 class="heading">Categories</h1>
+{% for i in products_in_cart %}
+<p>{{i.product_name}}</p>
+<p>{{i.price_with_vat}}</p>
+{% endfor %}
+
+    
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'store/home.js' %}"></script>
+{% endblock %}

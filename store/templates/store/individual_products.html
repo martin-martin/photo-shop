@@ -12,9 +12,10 @@
         <img src="{{ product.product_image.url }}" alt="Image of individual product">
         <p>Size: {{product.product_description}}</p>
         <p>Price: {{product.price_with_vat}}kr</p>
-        <form action="" method="POST">
-            <input type="hidden" name="" value="">
-            <input type="submit" value="Cart" class="button">
+        <form action="{% url 'add_cart' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+            <input type="submit" value="Add to cart" class="button">
         </form>
 
     </div>
