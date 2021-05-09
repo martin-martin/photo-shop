@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Category
+from .models import Category, Product
 
 
 def home(request):
@@ -10,5 +10,21 @@ def home(request):
     }
     return render(request, 'store/home.html', context)
 
-def categories(request):
-    return render(request, 'store/categories.html')
+
+def categories(request, category_id):
+
+    category = Category.objects.get(id=category_id)
+
+    all_products = Product.objects.all()
+
+    products = []
+
+    for i in all_products:
+        if i.category.id == int(category_id):
+            products.append(i)
+
+    context = {
+        "category": category,
+        "products": products
+    }
+    return render(request, 'store/categories.html', context)

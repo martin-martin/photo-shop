@@ -5,7 +5,14 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="heading"></h1>
+<h1 class="heading">{{category.category_name}}</h1>
+{% for i in products %}
+<h4>{{i.product_name}}</h4>
+<p>{{i.product_description}}</p>
+<p>{{i.product_price}}</p>
+
+
+{% endfor %}
 
 {% endblock %}
 
