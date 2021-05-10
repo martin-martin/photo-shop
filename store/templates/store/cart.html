@@ -7,10 +7,14 @@
 {% block content %}
 <h1 class="heading">Categories</h1>
 {% for i in products_in_cart %}
-{% for v in i.values %}
-{{v}}
-
-{%endfor%}
+<h5>{{i.name}}</h5>
+<p>{{i.price}}</p>
+<p>{{i.counter}}</p>
+<form action="{% url 'remove_from_cart' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{i.id}}">
+    <input type="submit" value="Remove">
+</form>
 
 {% endfor %}
 

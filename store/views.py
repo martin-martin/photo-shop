@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Category, Product
 
 
@@ -46,21 +46,19 @@ def add_cart(request):
         item_id = request.POST["product_id"]
         cart_ids.append(item_id)
 
-    counter = 0
     for i in cart_ids:
         product = Product.objects.get(id=int(i))
-        # products_in_cart.append(product)
 
-        if i == item_id:
-            counter += 1
+        counter = cart_ids.count(i)
 
         product_in_cart = {
-            "product": product,
+            "id": product.id,
+            "name": product.product_name,
+            "price": product.price_with_vat,
             "counter": counter
         }
 
         products_in_cart.append(product_in_cart)
-        print(products_in_cart)
 
     request.session["cart_items"] = cart_ids
 
@@ -69,3 +67,17 @@ def add_cart(request):
     }
 
     return render(request, "store/cart.html", context)
+
+
+def remove_from_cart(request):
+    cart_ids = request.session.get("cart_items", [])
+    if request.method == "POST":
+        item_id = request.POST["id"]
+
+    for i in cart_ids:
+        if i == item_id:
+            cart_ids.remove(i)
+
+    request.session["cart_items"] = cart_ids
+
+    return redirect("add_cart")
