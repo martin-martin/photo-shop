@@ -40,7 +40,7 @@ def ind_products(request, product_id):
 
 
 def add_cart(request):
-    products_in_cart = []
+    products_in_cart = {}
     cart_ids = request.session.get("cart_items", [])
     if request.method == "POST":
         item_id = request.POST["product_id"]
@@ -49,16 +49,10 @@ def add_cart(request):
     for i in cart_ids:
         product = Product.objects.get(id=int(i))
 
-        counter = cart_ids.count(i)
-
-        product_in_cart = {
-            "id": product.id,
-            "name": product.product_name,
-            "price": product.price_with_vat,
-            "counter": counter
-        }
-
-        products_in_cart.append(product_in_cart)
+        if products_in_cart.get(product.id):
+            products_in_cart[product.id]["counter"] += 1
+        else:
+            products_in_cart[product.id] = {"product": product, "counter": 1}
 
     request.session["cart_items"] = cart_ids
 
